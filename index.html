@@ -61,7 +61,7 @@
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800">
     <div class="flex min-h-screen">
         <!-- Sidebar -->
-        <aside class="w-64 bg-white shadow-xl fixed h-full p-6 flex flex-col justify-between z-10 border-r border-gray-200">
+        <aside class="w-64 bg-white shadow-xl fixed h-full p-6 flex flex-col justify-between z-10 border-r border-gray-200 overflow-y-auto">
             <div>
                 <!-- Profile -->
                 <div class="flex flex-col items-center">
@@ -447,7 +447,7 @@
             // Function to update active link
             function updateActiveLink() {
                 let current = '';
-                const scrollPos = window.scrollY + 100;
+                const scrollPos = window.scrollY + 150;
                 
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop;
@@ -503,3 +503,4 @@
     </script>
 </body>
 </html>
+
