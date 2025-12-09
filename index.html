@@ -6,26 +6,10 @@
     <title>Saikat Barua Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/framer-motion@latest/dist/framer-motion.js"></script>
     <style>
-        /* Custom animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        * { box-sizing: border-box; }
         
-        @keyframes slideIn {
-            from { transform: translateX(-20px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        .animate-fade-in {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-        
-        .animate-slide-in {
-            animation: slideIn 0.5s ease-out forwards;
-        }
+        html { scroll-behavior: smooth; }
         
         .gradient-text {
             background: linear-gradient(135deg, #4f46e5, #7c3aed);
@@ -33,449 +17,390 @@
             -webkit-text-fill-color: transparent;
         }
         
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        
         .glass-effect {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        .sidebar-link {
-            transition: all 0.3s ease;
+        /* Mobile Sidebar */
+        @media (max-width: 768px) {
+            body { overflow-x: hidden; }
+            
+            .flex.min-h-screen {
+                flex-direction: column;
+            }
+            
+            #sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #e5e7eb;
+                padding: 1rem;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+            
+            #sidebar > div:first-child {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 1rem;
+                flex: 1;
+            }
+            
+            #sidebar > div:last-child {
+                display: none;
+            }
+            
+            .flex.flex-col.items-center {
+                flex-direction: row !important;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .w-32 {
+                width: 60px !important;
+                height: 60px !important;
+                margin-bottom: 0 !important;
+            }
+            
+            h1.text-2xl {
+                font-size: 1.1rem !important;
+                margin: 0 !important;
+            }
+            
+            .text-sm.text-gray-500 {
+                display: none;
+            }
+            
+            .flex.gap-3.mt-3 {
+                margin-top: 0 !important;
+                gap: 0.5rem;
+            }
+            
+            nav {
+                display: none !important;
+            }
+            
+            main {
+                margin-left: 0 !important;
+                padding: 1rem !important;
+                width: 100%;
+            }
+            
+            /* Mobile Navigation Bar */
+            .mobile-nav {
+                position: sticky;
+                top: 0;
+                background: white;
+                z-index: 50;
+                border-bottom: 1px solid #e5e7eb;
+                padding: 0.5rem 1rem;
+            }
+            
+            .mobile-nav-scroll {
+                display: flex;
+                overflow-x: auto;
+                gap: 0.5rem;
+                padding: 0.5rem 0;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .mobile-nav-scroll::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .mobile-nav-link {
+                white-space: nowrap;
+                padding: 0.5rem 1rem;
+                border-radius: 9999px;
+                background: #f3f4f6;
+                font-size: 0.875rem;
+                color: #4b5563;
+                text-decoration: none;
+            }
+            
+            .mobile-nav-link.active {
+                background: #4f46e5;
+                color: white;
+            }
         }
         
-        .sidebar-link:hover {
-            transform: translateX(5px);
-        }
-        
-        .active-section {
-            background: linear-gradient(90deg, rgba(79, 70, 229, 0.1), rgba(124, 58, 237, 0.1));
-            border-left: 4px solid #4f46e5;
-        }
-        
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
+        @media (min-width: 769px) {
+            .mobile-nav { display: none; }
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800">
-    <div class="flex min-h-screen">
-        <!-- Sidebar -->
-        <aside class="w-64 bg-white shadow-xl fixed h-full p-6 flex flex-col justify-between z-10 border-r border-gray-200 overflow-y-auto">
+<body class="bg-gray-50 text-gray-800">
+    <!-- Desktop Sidebar -->
+    <div class="min-h-screen flex">
+        <aside id="sidebar" class="w-64 bg-white shadow-lg fixed h-full p-6 flex flex-col justify-between border-r border-gray-200 md:block hidden">
             <div>
-                <!-- Profile -->
                 <div class="flex flex-col items-center">
                     <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg mb-4">
                         <img src="https://ik.imagekit.io/tvssccugg/488765784_2911787192334442_6273203129631899695_n.jpg?updatedAt=1764774761395" 
                              alt="Saikat Barua" 
-                             class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                             onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'">
+                             class="w-full h-full object-cover"
+                             onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'">
                     </div>
                     
                     <h1 class="text-2xl font-bold gradient-text">Saikat Barua</h1>
-                    <p class="text-sm text-gray-500 text-center mt-1">CSE • Full Stack Developer • Data Enthusiast</p>
+                    <p class="text-sm text-gray-500 text-center mt-1">CSE • Full Stack Developer</p>
                     
-                    <!-- Social Links -->
                     <div class="flex gap-3 mt-3">
-                        <a href="https://github.com/Saikattbarua" target="_blank" class="p-2 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors">
+                        <a href="https://github.com/Saikattbarua" target="_blank" class="p-2 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-full">
                             <i class="fab fa-github text-lg"></i>
                         </a>
-                        <a href="https://www.linkedin.com/in/saikat-barua-1008ba2ab/" target="_blank" class="p-2 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors">
+                        <a href="https://www.linkedin.com/in/saikat-barua-1008ba2ab/" target="_blank" class="p-2 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-full">
                             <i class="fab fa-linkedin text-lg"></i>
                         </a>
-                        <a href="mailto:Saikatbarua121@gmail.com" class="p-2 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors">
+                        <a href="mailto:Saikatbarua121@gmail.com" class="p-2 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-full">
                             <i class="fas fa-envelope text-lg"></i>
                         </a>
                     </div>
                 </div>
                 
-                <!-- Navigation -->
                 <nav class="mt-8 space-y-1">
-                    <a href="#about" class="sidebar-link w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 text-gray-600 hover:bg-gray-100">
-                        <i class="fas fa-user w-5"></i>
-                        <span>About</span>
-                    </a>
-                    <a href="#experience" class="sidebar-link w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 text-gray-600 hover:bg-gray-100">
-                        <i class="fas fa-briefcase w-5"></i>
-                        <span>Experience</span>
-                    </a>
-                    <a href="#education" class="sidebar-link w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 text-gray-600 hover:bg-gray-100">
-                        <i class="fas fa-graduation-cap w-5"></i>
-                        <span>Education</span>
-                    </a>
-                    <a href="#projects" class="sidebar-link w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 text-gray-600 hover:bg-gray-100">
-                        <i class="fas fa-code w-5"></i>
-                        <span>Projects</span>
-                    </a>
-                    <a href="#skills" class="sidebar-link w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 text-gray-600 hover:bg-gray-100">
-                        <i class="fas fa-cogs w-5"></i>
-                        <span>Skills</span>
-                    </a>
-                    <a href="#contact" class="sidebar-link w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 text-gray-600 hover:bg-gray-100">
-                        <i class="fas fa-envelope w-5"></i>
-                        <span>Contact</span>
-                    </a>
+                    <a href="#about" class="w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 text-gray-600 hover:bg-gray-100">About</a>
+                    <a href="#experience" class="w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 text-gray-600 hover:bg-gray-100">Experience</a>
+                    <a href="#education" class="w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 text-gray-600 hover:bg-gray-100">Education</a>
+                    <a href="#projects" class="w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 text-gray-600 hover:bg-gray-100">Projects</a>
+                    <a href="#skills" class="w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 text-gray-600 hover:bg-gray-100">Skills</a>
+                    <a href="#contact" class="w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 text-gray-600 hover:bg-gray-100">Contact</a>
                 </nav>
             </div>
             
-            <!-- Footer -->
             <div class="text-center text-sm text-gray-500 pt-4 border-t border-gray-100">
-                © 2024 Saikat Barua<br>
-                <span class="text-xs">Built with ❤️</span>
+                © 2024 Saikat Barua
             </div>
         </aside>
         
+        <!-- Mobile Header -->
+        <div class="mobile-nav md:hidden">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow">
+                        <img src="https://ik.imagekit.io/tvssccugg/488765784_2911787192334442_6273203129631899695_n.jpg?updatedAt=1764774761395" 
+                             alt="Saikat Barua" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <h1 class="text-lg font-bold gradient-text">Saikat Barua</h1>
+                </div>
+                
+                <div class="flex gap-2">
+                    <a href="https://github.com/Saikattbarua" target="_blank" class="p-2 text-gray-600">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="mailto:Saikatbarua121@gmail.com" class="p-2 text-gray-600">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="mobile-nav-scroll mt-2">
+                <a href="#about" class="mobile-nav-link">About</a>
+                <a href="#experience" class="mobile-nav-link">Experience</a>
+                <a href="#education" class="mobile-nav-link">Education</a>
+                <a href="#projects" class="mobile-nav-link">Projects</a>
+                <a href="#skills" class="mobile-nav-link">Skills</a>
+                <a href="#contact" class="mobile-nav-link">Contact</a>
+            </div>
+        </div>
+        
         <!-- Main Content -->
-        <main class="ml-64 p-8 w-full space-y-12">
-            <!-- About Section -->
-            <section id="about" class="glass-effect p-8 rounded-2xl shadow-lg animate-fade-in">
-                <h2 class="text-3xl font-bold mb-6 gradient-text">About Me</h2>
-                <div class="flex items-start gap-6">
-                    <div class="flex-1">
-                        <p class="text-gray-700 leading-relaxed text-lg mb-4">
-                            I am a passionate Computer Science student at Independent University, Bangladesh, 
-                            dedicated to building innovative digital solutions that make a real impact. 
-                            With expertise spanning full‑stack development, data visualization, and hardware prototyping, 
-                            I thrive on creating clean, reliable, and user‑centric technology.
-                        </p>
-                        <p class="text-gray-600 leading-relaxed">
-                            Currently exploring the intersection of software engineering and data science, 
-                            I'm committed to continuous learning and contributing to meaningful projects 
-                            that solve real‑world problems.
-                        </p>
-                    </div>
-                </div>
+        <main class="md:ml-64 w-full p-4 md:p-8 space-y-8">
+            <!-- About -->
+            <section id="about" class="glass-effect p-6 md:p-8 rounded-2xl shadow-lg animate-fade-in">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 gradient-text">About Me</h2>
+                <p class="text-gray-700 mb-3">
+                    Computer Science student at Independent University, Bangladesh. Passionate about building innovative digital solutions.
+                </p>
+                <p class="text-gray-600">
+                    Expertise in full-stack development, data visualization, and creating impactful technology.
+                </p>
             </section>
             
-            <!-- Experience Section -->
-            <section id="experience" class="glass-effect p-8 rounded-2xl shadow-lg animate-fade-in" style="animation-delay: 0.1s">
-                <h2 class="text-3xl font-bold mb-6 gradient-text">Experience</h2>
-                
-                <div class="space-y-8">
-                    <div class="relative pl-6 border-l-2 border-indigo-200">
-                        <div class="absolute -left-[9px] top-0 w-4 h-4 bg-indigo-500 rounded-full"></div>
-                        <h3 class="text-xl font-bold text-gray-800">Aspiration to Inspiration</h3>
-                        <p class="text-sm text-indigo-600 font-medium mb-3">2025 – Present • Full Stack Developer</p>
-                        
-                        <p class="text-gray-700 mb-4">
-                            Contributing across three distinct divisions, developing comprehensive digital solutions 
-                            while participating in social impact initiatives.
-                        </p>
-                        
-                        <ul class="list-disc list-inside text-gray-700 space-y-2 mb-6">
-                            <li>Designed and implemented full‑stack web applications and dashboards</li>
-                            <li>Managed e‑commerce operations and product lifecycle</li>
-                            <li>Contributed to community‑focused programs and initiatives</li>
-                        </ul>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                            <div class="p-4 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-white/50 shadow-sm">
-                                <h4 class="font-bold text-gray-800 mb-2">Moveste (E‑commerce)</h4>
-                                <p class="text-sm text-gray-600">Product management & platform operations</p>
-                            </div>
-                            <div class="p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-white/50 shadow-sm">
-                                <h4 class="font-bold text-gray-800 mb-2">Moveste NGO</h4>
-                                <p class="text-sm text-gray-600">Social impact & community engagement</p>
-                            </div>
-                            <div class="p-4 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 border border-white/50 shadow-sm">
-                                <h4 class="font-bold text-gray-800 mb-2">Radial Velocity</h4>
-                                <p class="text-sm text-gray-600">Web & mobile app development</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Teaching Experience -->
-                    <div class="relative pl-6 border-l-2 border-indigo-200">
-                        <div class="absolute -left-[9px] top-0 w-4 h-4 bg-indigo-500 rounded-full"></div>
-                        <h3 class="text-xl font-bold text-gray-800">Coding Skills Instructor</h3>
-                        <p class="text-sm text-indigo-600 font-medium mb-3">South Point School and College, Dhaka • 2023</p>
-                        
-                        <p class="text-gray-700 mb-4">
-                            Taught coding fundamentals and programming skills to students, fostering their interest in computer science 
-                            and helping them build a strong foundation in software development.
-                        </p>
-                        
-                        <ul class="list-disc list-inside text-gray-700 space-y-2">
-                            <li>Delivered comprehensive coding lessons to school students</li>
-                            <li>Mentored students in programming concepts and best practices</li>
-                            <li>Encouraged interest in computer science and technology careers</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Education Section -->
-            <section id="education" class="glass-effect p-8 rounded-2xl shadow-lg animate-fade-in" style="animation-delay: 0.15s">
-                <h2 class="text-3xl font-bold mb-6 gradient-text">Education</h2>
-                
-                <div class="space-y-8">
-                    <!-- Undergrad -->
-                    <div class="relative pl-6 border-l-2 border-indigo-200">
-                        <div class="absolute -left-[9px] top-0 w-4 h-4 bg-indigo-500 rounded-full"></div>
-                        <h3 class="text-xl font-bold text-gray-800">Bachelor of Science in Computer Science</h3>
-                        <p class="text-sm text-indigo-600 font-medium mb-1">Independent University of Bangladesh • 2025</p>
-                        <p class="text-sm text-gray-600 mb-3"><span class="font-semibold">Minor:</span> Management Information Systems (MIS)</p>
-                        <p class="text-gray-700 mb-4">
-                            Completed undergraduate studies with focus on full-stack development, data structures, and software engineering principles.
-                        </p>
-                        <div class="inline-block px-4 py-2 bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-700 font-medium rounded-lg border border-indigo-100">
-                            <i class="fas fa-award mr-2"></i>Dean's Honor Award (2024)
-                        </div>
-                    </div>
-                    
-                    <!-- HSC -->
-                    <div class="relative pl-6 border-l-2 border-indigo-200">
-                        <div class="absolute -left-[9px] top-0 w-4 h-4 bg-indigo-500 rounded-full"></div>
-                        <h3 class="text-xl font-bold text-gray-800">Higher Secondary Certificate (HSC)</h3>
-                        <p class="text-sm text-indigo-600 font-medium mb-3">South Point School and College, Dhaka • 2020</p>
-                        <p class="text-gray-700">
-                            Completed higher secondary education with strong foundation in science and mathematics.
-                        </p>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Projects Section -->
-            <section id="projects" class="glass-effect p-8 rounded-2xl shadow-lg animate-fade-in" style="animation-delay: 0.2s">
-                <h2 class="text-3xl font-bold mb-6 gradient-text">Projects</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Project 1 -->
-                    <a href="https://github.com/Saikattbarua/Atm_Booth" target="_blank" 
-                       class="group bg-white border border-gray-200 p-6 rounded-xl hover:shadow-xl hover:border-indigo-200 transition-all duration-300 hover:-translate-y-1">
-                        <div class="flex items-start gap-4">
-                            <div class="text-2xl">🏦</div>
-                            <div class="flex-1">
-                                <div class="flex items-center justify-between mb-2">
-                                    <h3 class="text-lg font-bold text-gray-800 group-hover:text-indigo-600">ATM Booth Simulation</h3>
-                                    <i class="fas fa-external-link-alt text-gray-400 group-hover:text-indigo-500"></i>
-                                </div>
-                                <p class="text-gray-600 text-sm mb-4">Java‑based banking system simulation with secure transaction handling.</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Java</span>
-                                    <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">OOP</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    
-                    <!-- Project 2 -->
-                    <a href="https://github.com/Saikattbarua/OnlineBasedConsultationService" target="_blank" 
-                       class="group bg-white border border-gray-200 p-6 rounded-xl hover:shadow-xl hover:border-indigo-200 transition-all duration-300 hover:-translate-y-1">
-                        <div class="flex items-start gap-4">
-                            <div class="text-2xl">⚖️</div>
-                            <div class="flex-1">
-                                <div class="flex items-center justify-between mb-2">
-                                    <h3 class="text-lg font-bold text-gray-800 group-hover:text-indigo-600">Lawyer Consultation Platform</h3>
-                                    <i class="fas fa-external-link-alt text-gray-400 group-hover:text-indigo-500"></i>
-                                </div>
-                                <p class="text-gray-600 text-sm mb-4">Full‑stack web application connecting clients with legal professionals.</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">React</span>
-                                    <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Firebase</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!--project00-->
-                    <!-- Project 3 -->
-                    <a href="https://www.aspirationtoinspiration.com" target="_blank" 
-                      class="group bg-white border border-gray-200 p-6 rounded-xl hover:shadow-xl hover:border-indigo-200 transition-all duration-300 hover:-translate-y-1">
-                        <div class="flex items-start gap-4">
-                           <div class="text-2xl">🌐</div>
-                           <div class="flex-1">
-                             <div class="flex items-center justify-between mb-2">
-                                <h3 class="text-lg font-bold text-gray-800 group-hover:text-indigo-600">Aspiration to Inspiration Platform</h3>
-                                <i class="fas fa-external-link-alt text-gray-400 group-hover:text-indigo-500"></i>
-                        </div>
-                        <p class="text-gray-600 text-sm mb-4">Lead developer of unified platform connecting ecommerce, NGO, and digital services websites.</p>
-                        <div class="flex flex-wrap gap-2">
-                           <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">React</span>
-                           <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Node.js</span>
-                           <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">MongoDB</span>
-                        </div>
-                        </div>
-                       </div>
-                    </a>
-                    
-                    <!-- Project 3 -->
-                    <a href="https://github.com/Saikattbarua/miniSoccerBot" target="_blank" 
-                       class="group bg-white border border-gray-200 p-6 rounded-xl hover:shadow-xl hover:border-indigo-200 transition-all duration-300 hover:-translate-y-1">
-                        <div class="flex items-start gap-4">
-                            <div class="text-2xl">🤖</div>
-                            <div class="flex-1">
-                                <div class="flex items-center justify-between mb-2">
-                                    <h3 class="text-lg font-bold text-gray-800 group-hover:text-indigo-600">Mini Soccer Bot</h3>
-                                    <i class="fas fa-external-link-alt text-gray-400 group-hover:text-indigo-500"></i>
-                                </div>
-                                <p class="text-gray-600 text-sm mb-4">Bluetooth‑controlled Arduino robot with motor drivers and sensors.</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Arduino</span>
-                                    <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">C++</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    
-                    <!-- Project 4 -->
-                    <a href="https://github.com/Saikattbarua/BimanAirlinesData" target="_blank" 
-                       class="group bg-white border border-gray-200 p-6 rounded-xl hover:shadow-xl hover:border-indigo-200 transition-all duration-300 hover:-translate-y-1">
-                        <div class="flex items-start gap-4">
-                            <div class="text-2xl">📊</div>
-                            <div class="flex-1">
-                                <div class="flex items-center justify-between mb-2">
-                                    <h3 class="text-lg font-bold text-gray-800 group-hover:text-indigo-600">Biman Airlines Data Analysis</h3>
-                                    <i class="fas fa-external-link-alt text-gray-400 group-hover:text-indigo-500"></i>
-                                </div>
-                                <p class="text-gray-600 text-sm mb-4">Comprehensive data analysis dashboard for flight performance insights.</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Power BI</span>
-                                    <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Data Analysis</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </section>
-            
-            <!-- Skills Section -->
-            <section id="skills" class="glass-effect p-8 rounded-2xl shadow-lg animate-fade-in" style="animation-delay: 0.3s">
-                <h2 class="text-3xl font-bold mb-6 gradient-text">Skills & Technologies</h2>
+            <!-- Experience -->
+            <section id="experience" class="glass-effect p-6 md:p-8 rounded-2xl shadow-lg animate-fade-in">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 gradient-text">Experience</h2>
                 
                 <div class="space-y-6">
-                    <!-- Programming Languages -->
-                    <div>
-                        <h3 class="text-lg font-semibold text-gray-700 mb-4">Programming Languages</h3>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="px-4 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 font-medium rounded-lg border border-blue-100">
-                                JavaScript
-                            </span>
-                            <span class="px-4 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 font-medium rounded-lg border border-blue-100">
-                                Python
-                            </span>
-                            <span class="px-4 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 font-medium rounded-lg border border-blue-100">
-                                Java
-                            </span>
-                            <span class="px-4 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 font-medium rounded-lg border border-blue-100">
-                                C++
-                            </span>
-                            <span class="px-4 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 font-medium rounded-lg border border-blue-100">
-                                SQL
-                            </span>
+                    <div class="border-l-2 border-indigo-300 pl-4">
+                        <h3 class="text-xl font-bold text-gray-800">Aspiration to Inspiration</h3>
+                        <p class="text-indigo-600 text-sm mb-2">2025 – Present • Full Stack Developer</p>
+                        <p class="text-gray-700 mb-3">
+                            Developing digital solutions across three divisions: e-commerce, NGO, and tech services.
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">
+                            <div class="p-3 bg-indigo-50 rounded-lg">
+                                <h4 class="font-bold text-gray-800">Moveste</h4>
+                                <p class="text-sm text-gray-600">E-commerce platform</p>
+                            </div>
+                            <div class="p-3 bg-emerald-50 rounded-lg">
+                                <h4 class="font-bold text-gray-800">Moveste NGO</h4>
+                                <p class="text-sm text-gray-600">Social impact initiatives</p>
+                            </div>
+                            <div class="p-3 bg-purple-50 rounded-lg">
+                                <h4 class="font-bold text-gray-800">Radial Velocity</h4>
+                                <p class="text-sm text-gray-600">Web & mobile development</p>
+                            </div>
                         </div>
                     </div>
                     
-                    <!-- Web Development -->
+                    <div class="border-l-2 border-indigo-300 pl-4">
+                        <h3 class="text-xl font-bold text-gray-800">Coding Instructor</h3>
+                        <p class="text-indigo-600 text-sm mb-2">South Point School and College • 2023</p>
+                        <p class="text-gray-700">
+                            Taught coding fundamentals to students and mentored in programming concepts.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Education -->
+            <section id="education" class="glass-effect p-6 md:p-8 rounded-2xl shadow-lg animate-fade-in">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 gradient-text">Education</h2>
+                
+                <div class="space-y-6">
+                    <div class="border-l-2 border-indigo-300 pl-4">
+                        <h3 class="text-xl font-bold text-gray-800">BSc in Computer Science</h3>
+                        <p class="text-indigo-600 text-sm mb-1">Independent University of Bangladesh • 2025</p>
+                        <p class="text-sm text-gray-600 mb-2">Minor: Management Information Systems</p>
+                        <p class="text-gray-700">Focus on full-stack development and software engineering.</p>
+                    </div>
+                    
+                    <div class="border-l-2 border-indigo-300 pl-4">
+                        <h3 class="text-xl font-bold text-gray-800">Higher Secondary Certificate</h3>
+                        <p class="text-indigo-600 text-sm mb-2">South Point School and College • 2020</p>
+                        <p class="text-gray-700">Science and Mathematics background.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Projects -->
+            <section id="projects" class="glass-effect p-6 md:p-8 rounded-2xl shadow-lg animate-fade-in">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 gradient-text">Projects</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <a href="https://github.com/Saikattbarua/Atm_Booth" target="_blank" class="bg-white border border-gray-200 p-4 rounded-xl hover:shadow-xl transition-all">
+                        <h3 class="font-bold text-gray-800 mb-2">ATM Booth Simulation</h3>
+                        <p class="text-gray-600 text-sm mb-3">Java banking system simulation</p>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Java</span>
+                            <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">OOP</span>
+                        </div>
+                    </a>
+                    
+                    <a href="https://github.com/Saikattbarua/OnlineBasedConsultationService" target="_blank" class="bg-white border border-gray-200 p-4 rounded-xl hover:shadow-xl transition-all">
+                        <h3 class="font-bold text-gray-800 mb-2">Lawyer Consultation Platform</h3>
+                        <p class="text-gray-600 text-sm mb-3">React + Firebase web application</p>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">React</span>
+                            <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Firebase</span>
+                        </div>
+                    </a>
+                    
+                    <a href="https://www.aspirationtoinspiration.com" target="_blank" class="bg-white border border-gray-200 p-4 rounded-xl hover:shadow-xl transition-all">
+                        <h3 class="font-bold text-gray-800 mb-2">Aspiration to Inspiration Platform</h3>
+                        <p class="text-gray-600 text-sm mb-3">Unified platform with 3 websites</p>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">React</span>
+                            <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Node.js</span>
+                        </div>
+                    </a>
+                    
+                    <a href="https://github.com/Saikattbarua/miniSoccerBot" target="_blank" class="bg-white border border-gray-200 p-4 rounded-xl hover:shadow-xl transition-all">
+                        <h3 class="font-bold text-gray-800 mb-2">Mini Soccer Bot</h3>
+                        <p class="text-gray-600 text-sm mb-3">Arduino robotics project</p>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Arduino</span>
+                            <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">C++</span>
+                        </div>
+                    </a>
+                </div>
+            </section>
+            
+            <!-- Skills -->
+            <section id="skills" class="glass-effect p-6 md:p-8 rounded-2xl shadow-lg animate-fade-in">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 gradient-text">Skills</h2>
+                
+                <div class="space-y-4">
                     <div>
-                        <h3 class="text-lg font-semibold text-gray-700 mb-4">Web Development</h3>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="px-4 py-2 bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700 font-medium rounded-lg border border-purple-100">
-                                React
-                            </span>
-                            <span class="px-4 py-2 bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700 font-medium rounded-lg border border-purple-100">
-                                Node.js
-                            </span>
-                            <span class="px-4 py-2 bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700 font-medium rounded-lg border border-purple-100">
-                                MongoDB
-                            </span>
-                            <span class="px-4 py-2 bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700 font-medium rounded-lg border border-purple-100">
-                                Firebase
-                            </span>
-                            <span class="px-4 py-2 bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700 font-medium rounded-lg border border-purple-100">
-                                Tailwind CSS
-                            </span>
+                        <h3 class="font-semibold text-gray-700 mb-2">Programming</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-lg">JavaScript</span>
+                            <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-lg">Python</span>
+                            <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-lg">Java</span>
+                            <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-lg">C++</span>
                         </div>
                     </div>
                     
-                    <!-- Tools & Platforms -->
                     <div>
-                        <h3 class="text-lg font-semibold text-gray-700 mb-4">Tools & Platforms</h3>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="px-4 py-2 bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-700 font-medium rounded-lg border border-emerald-100">
-                                Git
-                            </span>
-                            <span class="px-4 py-2 bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-700 font-medium rounded-lg border border-emerald-100">
-                                Power BI
-                            </span>
-                            <span class="px-4 py-2 bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-700 font-medium rounded-lg border border-emerald-100">
-                                Arduino
-                            </span>
-                            <span class="px-4 py-2 bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-700 font-medium rounded-lg border border-emerald-100">
-                                VS Code
-                            </span>
-                            <span class="px-4 py-2 bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-700 font-medium rounded-lg border border-emerald-100">
-                                Flutter
-                            </span>
+                        <h3 class="font-semibold text-gray-700 mb-2">Web Development</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-lg">React</span>
+                            <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-lg">Node.js</span>
+                            <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-lg">MongoDB</span>
+                            <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-lg">Firebase</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-semibold text-gray-700 mb-2">Tools</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-lg">Git</span>
+                            <span class="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-lg">Power BI</span>
+                            <span class="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-lg">Arduino</span>
+                            <span class="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-lg">VS Code</span>
                         </div>
                     </div>
                 </div>
             </section>
             
-            <!-- Contact Section -->
-            <section id="contact" class="bg-gradient-to-br from-indigo-50 to-purple-50 p-8 rounded-2xl shadow-lg border border-white/50 animate-fade-in" style="animation-delay: 0.4s">
-                <h2 class="text-3xl font-bold mb-6 gradient-text">Get In Touch</h2>
+            <!-- Contact -->
+            <section id="contact" class="bg-gradient-to-br from-indigo-50 to-purple-50 p-6 md:p-8 rounded-2xl shadow-lg animate-fade-in">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 gradient-text">Contact</h2>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <p class="text-gray-700 text-lg mb-6">
-                            I'm always open to discussing new opportunities, innovative projects, 
-                            or potential collaborations. Feel free to reach out!
-                        </p>
-                        
-                        <!-- Contact Info -->
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm">
-                                    <i class="fas fa-envelope text-indigo-600"></i>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Email</p>
-                                    <a href="mailto:Saikatbarua121@gmail.com" class="font-medium text-gray-800 hover:text-indigo-600">
-                                        Saikatbarua121@gmail.com
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm">
-                                    <i class="fas fa-map-marker-alt text-indigo-600"></i>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Location</p>
-                                    <p class="font-medium text-gray-800">Gulshan-2, Dhaka, Bangladesh</p>
-                                </div>
-                            </div>
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow">
+                            <i class="fas fa-envelope text-indigo-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Email</p>
+                            <a href="mailto:Saikatbarua121@gmail.com" class="font-medium text-gray-800 hover:text-indigo-600">
+                                Saikatbarua121@gmail.com
+                            </a>
                         </div>
                     </div>
                     
-                    <!-- Social Links Cards -->
-                    <div class="space-y-4">
-                        <a href="https://github.com/Saikattbarua" target="_blank" 
-                           class="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-200 hover:border-indigo-300 hover:shadow-md transition-all">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
-                                    <i class="fab fa-github text-lg"></i>
-                                </div>
-                                <div>
-                                    <p class="font-medium text-gray-800">GitHub</p>
-                                    <p class="text-sm text-gray-500">@Saikattbarua</p>
-                                </div>
-                            </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow">
+                            <i class="fas fa-map-marker-alt text-indigo-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Location</p>
+                            <p class="font-medium text-gray-800">Gulshan-2, Dhaka</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4 mt-4">
+                        <a href="https://github.com/Saikattbarua" target="_blank" class="flex-1 p-3 bg-white rounded-xl border border-gray-200 hover:border-indigo-300 flex items-center justify-between">
+                            <span class="font-medium text-gray-800">GitHub</span>
                             <i class="fas fa-external-link-alt text-gray-400"></i>
                         </a>
-                        
-                        <a href="https://www.linkedin.com/in/saikat-barua-1008ba2ab/" target="_blank" 
-                           class="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-200 hover:border-indigo-300 hover:shadow-md transition-all">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center">
-                                    <i class="fab fa-linkedin text-blue-600 text-lg"></i>
-                                </div>
-                                <div>
-                                    <p class="font-medium text-gray-800">LinkedIn</p>
-                                    <p class="text-sm text-gray-500">Saikat Barua</p>
-                                </div>
-                            </div>
+                        <a href="https://www.linkedin.com/in/saikat-barua-1008ba2ab/" target="_blank" class="flex-1 p-3 bg-white rounded-xl border border-gray-200 hover:border-indigo-300 flex items-center justify-between">
+                            <span class="font-medium text-gray-800">LinkedIn</span>
                             <i class="fas fa-external-link-alt text-gray-400"></i>
                         </a>
                     </div>
@@ -485,69 +410,60 @@
     </div>
 
     <script>
-        // Active section highlighting
-        document.addEventListener('DOMContentLoaded', function() {
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('nav a');
-            
-            // Function to update active link
-            function updateActiveLink() {
-                let current = '';
-                const scrollPos = window.scrollY + 150;
+        // Mobile navigation active state
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
                 
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.clientHeight;
+                if (targetElement) {
+                    // Remove active class from all links
+                    document.querySelectorAll('.mobile-nav-link').forEach(l => l.classList.remove('active'));
+                    // Add active class to clicked link
+                    this.classList.add('active');
                     
-                    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                        current = section.getAttribute('id');
-                    }
-                });
-                
-                navLinks.forEach(link => {
-                    link.classList.remove('active-section');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active-section');
-                    }
-                });
-            }
-            
-            // Initial update
-            updateActiveLink();
-            
-            // Update on scroll
-            window.addEventListener('scroll', updateActiveLink);
-            
-            // Smooth scroll for navigation links
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetSection = document.querySelector(targetId);
-                    
-                    if (targetSection) {
-                        window.scrollTo({
-                            top: targetSection.offsetTop - 20,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
-            // Add hover effect to project cards
-            const projectCards = document.querySelectorAll('.group');
-            projectCards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-5px)';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                });
+                    // Smooth scroll
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
+        
+        // Highlight active section on scroll
+        const sections = document.querySelectorAll('section');
+        const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+        
+        function updateActiveNav() {
+            let current = '';
+            const scrollPos = window.scrollY + 100;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            mobileLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', updateActiveNav);
+        
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', updateActiveNav);
     </script>
 </body>
 </html>
+
 
 
